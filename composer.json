@@ -1,20 +1,19 @@
 {
-    "name": "leekhang/response",
+    "name": "tattran22/response",
     "description": "Xử lý response của API",
     "authors": [
         {
-            "name": "Lê Bảo Khang",
-            "email": "lekhang2512@gmail.com"
+            "name": "Tất Trần",
+            "email": "tattran.dev@gmail.com"
         }
     ],
     "require": {
-        "league/fractal": "^0.18.0",
-        "illuminate/pagination": "7.*",
-        "illuminate/support": "7.*"
+        "laravel/framework": "^10.38",
+        "spatie/laravel-fractal": "^6.0.3"
     },
     "autoload": {
         "psr-4": {
-            "Darkness\\Response\\": "src/"
+            "TatTran\\Response\\": "src/"
         }
     },
     "minimum-stability": "dev"

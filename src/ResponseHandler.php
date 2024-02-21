@@ -1,82 +1,140 @@
 <?php
 
-namespace Darkness\Response;
+namespace TatTran\Response;
 
-use Darkness\Response\Transformers\OptimusPrime;
+use TatTran\Response\Transformers\ResponseTransformer;
+use Illuminate\Http\JsonResponse;
 
 trait ResponseHandler
 {
-    public $transform;
+    /**
+     * Transform instance.
+     *
+     * @var mixed
+     */
+    protected $transform;
 
+    /**
+     * Set transformer for response.
+     *
+     * @param mixed $transform
+     * @return void
+     */
     protected function setTransformer($transform)
     {
         $this->transform = $transform;
     }
 
-    protected function successResponse($data)
+    /**
+     * Generate success response.
+     *
+     * @param mixed|null $data
+     * @return JsonResponse
+     */
+    protected function successResponse($data = null): JsonResponse
     {
-        if ($this->transform) {
-            $response = array_merge([
-                'code' => 200,
-                'status' => 'success',
-            ], $this->transform($data));
-            return response()->json($response, $response['code']);
-        } else {
-            if (is_null($data)) {
-                $data = [];
-            }
-            $response = array_merge([
-                'code' => 200,
-                'status' => 'success',
-            ], ['data' => $data]);
-            return response()->json($response, 200);
-        }
+        $response = [
+            'code' => 200,
+            'status' => 'success',
+            'data' => $data ?? [],
+        ];
+
+        return $this->generateResponse($response, $response['code']);
     }
 
-    protected function notFoundResponse()
+    /**
+     * Generate not found response.
+     *
+     * @return JsonResponse
+     */
+    protected function notFoundResponse(): JsonResponse
     {
         $response = [
             'code' => 404,
             'status' => 'error',
             'data' => 'Resource Not Found',
-            'message' => 'Not Found'
+            'message' => 'Not Found',
         ];
-        return response()->json($response, $response['code']);
+
+        return $this->generateResponse($response, $response['code']);
     }
 
-    public function deleteResponse()
+    /**
+     * Generate delete response.
+     *
+     * @return JsonResponse
+     */
+    public function deleteResponse(): JsonResponse
     {
         $response = [
             'code' => 200,
             'status' => 'success',
             'data' => [],
-            'message' => 'Resource Deleted'
+            'message' => 'Resource Deleted',
         ];
-        return response()->json($response, $response['code']);
+
+        return $this->generateResponse($response, $response['code']);
     }
 
-    public function errorResponse($data)
+    /**
+     * Generate error response.
+     *
+     * @param mixed $data
+     * @return JsonResponse
+     */
+    public function errorResponse($data): JsonResponse
     {
         $response = [
             'code' => 422,
             'status' => 'error',
             'data' => $data,
-            'message' => 'Unprocessable Entity'
+            'message' => 'Unprocessable Entity',
         ];
-        return response()->json($response, $response['code']);
+
+        return $this->generateResponse($response, $response['code']);
     }
 
-    public function paymentRequiredResponse($message)
+    /**
+     * Generate payment required response.
+     *
+     * @param string $message
+     * @return JsonResponse
+     */
+    public function paymentRequiredResponse(string $message): JsonResponse
     {
         $response = [
             'code' => 402,
             'status' => 'error',
             'data' => 'payment required',
-            'message' => $message
+            'message' => $message,
         ];
-        return response()->json($response, $response['code']);
+
+        return $this->generateResponse($response, $response['code']);
     }
 
+    /**
+     * Generate JSON response.
+     *
+     * @param array $data
+     * @param int $statusCode
+     * @return JsonResponse
+     */
+    protected function generateResponse(array $data, int $statusCode): JsonResponse
+    {
+        if ($this->transform) {
+            $transformedData = $this->transform($data['data']);
+            $data = array_merge($data, $transformedData);
+        }
+
+        return response()->json($data, $statusCode);
+    }
+
+    /**
+     * Transform data using OptimusPrime.
+     *
+     * @param mixed $data
+     * @return mixed
+     */
     private function transform($data)
     {
         $optimus = app()->make(OptimusPrime::class);
