@@ -1,5 +1,6 @@
 {
     "name": "tattran22/response",
+    "version": "1.1.0",
     "description": "Xử lý response của API",
     "authors": [
         {
@@ -8,7 +9,8 @@
         }
     ],
     "require": {
-        "laravel/framework": "^10.38",
+        "php": "^8.2",
+        "laravel/framework": "^v9.0.2 | ^v10.0.1",
         "spatie/laravel-fractal": "^6.0.3"
     },
     "autoload": {

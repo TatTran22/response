@@ -1,54 +1,41 @@
-# Tattran22/Response
+## TatTran22/Response: Easy API Response Transformation for Laravel
 
-Tattran22/Response is a Laravel package designed to handle response transformation using the Fractal library. It provides a convenient way to transform your API responses, including pagination support and includes parsing.
+This Laravel package simplifies handling API responses using the Fractal library. It lets you easily:
+
+* **Transform data:** Convert raw data into structured responses.
+* **Include relationships:** Add related data to your responses without separate requests.
+* **Handle pagination:** Automatically add pagination links and metadata.
 
 ## Installation
 
-You can install the package via Composer. Run this command in your terminal:
+Just run this command in your terminal:
 
 ```bash
 composer require tattran22/response
 ```
 
-The package will automatically register itself.
-
 ## Usage
 
-### Basic Usage
+1. **Prepare your data:** Use Eloquent models, arrays, or any suitable format.
+2. **Create a transformer:** Define how to transform your data using a `ResponseTransformer` class.
+3. **Transform your data:** Call `transformData` with your data and transformer.
+   ```php
+   use Tattran22\Response\Transformers\ResponseTransformer;
 
-First, make sure your data is prepared in a format that can be transformed, such as Eloquent models or plain arrays. Then, create a transformer class to specify how your data should be transformed.
+   $transformer = new ResponseTransformer($manager);
+   $response = $transformer->transformData($data, $transformerInstance);
+    ```
+4. **(Optional) Include relationships:** Add `include` parameters to your API requests (e.g., `?include=relationship`).
+    ```php
+    $transformer->setIncludes(['include1', 'include2']);
+    ```
+## Features
 
-```php
-use Tattran22\Response\Transformers\ResponseTransformer;
+* **Easy transformation:** Define transformations in clear, readable code.
+* **Includes parsing:** Automatically handle `include` query parameters.
+* **Pagination support:** Add pagination links and metadata seamlessly.
+* **Set includes programmatically:** Control included relationships in code.
 
-$transformer = new ResponseTransformer($manager);
-$response = $transformer->transformData($data, $transformerInstance);
-```
+## Open Source & Credits
 
-### Including Relationships
-
-You can include relationships in your response by specifying them in the `include` query parameter. For example:
-
-```
-http://example.com/api/resource?include=relationship
-```
-
-### Pagination
-
-If your data is paginated, the package will automatically handle pagination links and metadata.
-
-### Set Includes
-
-You can set includes programmatically using the `setIncludes` method.
-
-```php
-$transformer->setIncludes(['include1', 'include2']);
-```
-
-## License
-
-This package is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-## Credits
-
-This package is developed and maintained by [Tat Tran](https://github.com/tattran22).
+This package is free to use under the MIT license and developed by Tat Tran (https://tattran.com).

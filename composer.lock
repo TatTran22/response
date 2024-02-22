@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2da506bde8ef8d5f76ec758f7eb05b53",
+    "content-hash": "b67029f41d27b8d585e37517d9b89042",
     "packages": [
         {
             "name": "brick/math",
@@ -730,12 +730,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f7c57c47f677b3fcfa1c70c6c3c51d0f90866d31"
+                "reference": "e0be50a7b770c46b522377cb46318e06e312014e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f7c57c47f677b3fcfa1c70c6c3c51d0f90866d31",
-                "reference": "f7c57c47f677b3fcfa1c70c6c3c51d0f90866d31",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/e0be50a7b770c46b522377cb46318e06e312014e",
+                "reference": "e0be50a7b770c46b522377cb46318e06e312014e",
                 "shasum": ""
             },
             "require": {
@@ -929,7 +929,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-02-21T15:19:17+00:00"
+            "time": "2024-02-22T14:52:40+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -937,12 +937,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/prompts.git",
-                "reference": "0ae2de8b9192261f3d627252cfc97c64fd220c25"
+                "reference": "ca6872ab6aec3ab61db3a61f83a6caf764ec7781"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/prompts/zipball/0ae2de8b9192261f3d627252cfc97c64fd220c25",
-                "reference": "0ae2de8b9192261f3d627252cfc97c64fd220c25",
+                "url": "https://api.github.com/repos/laravel/prompts/zipball/ca6872ab6aec3ab61db3a61f83a6caf764ec7781",
+                "reference": "ca6872ab6aec3ab61db3a61f83a6caf764ec7781",
                 "shasum": ""
             },
             "require": {
@@ -987,7 +987,7 @@
                 "issues": "https://github.com/laravel/prompts/issues",
                 "source": "https://github.com/laravel/prompts/tree/main"
             },
-            "time": "2024-02-21T14:18:14+00:00"
+            "time": "2024-02-21T19:25:27+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -5204,7 +5204,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.2"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
