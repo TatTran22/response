@@ -1,7 +1,7 @@
 {
     "name": "tattran22/response",
-    "version": "1.1.0",
-    "description": "Xử lý response của API",
+    "version": "2.0.0",
+    "description": "Easy API Response Transformation for Laravel",
     "authors": [
         {
             "name": "Tất Trần",
