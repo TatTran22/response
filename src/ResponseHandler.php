@@ -2,23 +2,15 @@
 
 namespace TatTran\Response;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
-use TatTran\Response\Transformers\ResponseTransformer;
 use Illuminate\Http\JsonResponse;
+use TatTran\Response\Transformers\ResponseTransformer;
 
 trait ResponseHandler
 {
-    /**
-     * Transform instance.
-     *
-     * @var mixed
-     */
-    protected $transform;
+    public $transform;
 
     /**
-     * Set transformer for response.
-     *
-     * @param mixed $transform
+     * @param $transform
      * @return void
      */
     protected function setTransformer($transform)
@@ -27,119 +19,80 @@ trait ResponseHandler
     }
 
     /**
-     * Generate success response.
-     *
-     * @param mixed|null $data
+     * @param $data
      * @return JsonResponse
      */
-    protected function successResponse($data = null): JsonResponse
+    protected function successResponse($data)
     {
         $response = [
             'code' => 200,
             'status' => 'success',
-            'data' => $data ?? [],
+            'data' => $this->transform ? $this->transform($data) : ($data ?? [])
         ];
-
-        return $this->generateResponse($response, $response['code']);
+        return response()->json($response, $response['code']);
     }
 
     /**
-     * Generate not found response.
-     *
      * @return JsonResponse
      */
-    protected function notFoundResponse(): JsonResponse
+    protected function notFoundResponse()
     {
-        $response = [
+        return response()->json([
             'code' => 404,
             'status' => 'error',
             'data' => 'Resource Not Found',
-            'message' => 'Not Found',
-        ];
-
-        return $this->generateResponse($response, $response['code']);
+            'message' => 'Not Found'
+        ], 404);
     }
 
     /**
-     * Generate delete response.
-     *
      * @return JsonResponse
      */
-    public function deleteResponse(): JsonResponse
+    public function deleteResponse()
     {
-        $response = [
+        return response()->json([
             'code' => 200,
             'status' => 'success',
             'data' => [],
-            'message' => 'Resource Deleted',
-        ];
-
-        return $this->generateResponse($response, $response['code']);
+            'message' => 'Resource Deleted'
+        ], 200);
     }
 
     /**
-     * Generate error response.
-     *
-     * @param mixed $data
+     * @param $data
      * @return JsonResponse
      */
-    public function errorResponse($data): JsonResponse
+    public function errorResponse($data)
     {
-        $response = [
+        return response()->json([
             'code' => 422,
             'status' => 'error',
             'data' => $data,
-            'message' => 'Unprocessable Entity',
-        ];
-
-        return $this->generateResponse($response, $response['code']);
+            'message' => 'Unprocessable Entity'
+        ], 422);
     }
 
     /**
-     * Generate payment required response.
-     *
-     * @param string $message
+     * @param $message
      * @return JsonResponse
      */
-    public function paymentRequiredResponse(string $message): JsonResponse
+    public function paymentRequiredResponse($message)
     {
-        $response = [
+        return response()->json([
             'code' => 402,
             'status' => 'error',
             'data' => 'payment required',
-            'message' => $message,
-        ];
-
-        return $this->generateResponse($response, $response['code']);
+            'message' => $message
+        ], 402);
     }
 
     /**
-     * Generate JSON response.
-     *
-     * @param array $data
-     * @param int $statusCode
-     * @return JsonResponse
-     */
-    protected function generateResponse(array $data, int $statusCode): JsonResponse
-    {
-        if ($this->transform) {
-            $transformedData = $this->transform($data['data']);
-            $data = array_merge($data, $transformedData);
-        }
-
-        return response()->json($data, $statusCode);
-    }
-
-    /**
-     * Transform data using ResponseTransformer.
-     *
-     * @param mixed $data
+     * @param $data
      * @return mixed
-     * @throws BindingResolutionException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     private function transform($data)
     {
-        $responseTransform = app()->make(ResponseTransformer::class);
-        return $responseTransform->transform($data, $this->transform);
+        return app()->make(ResponseTransformer::class)->transform($data, $this->transform);
     }
 }
