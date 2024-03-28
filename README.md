@@ -20,7 +20,7 @@ composer require tattran22/response
 2. **Create a transformer:** Define how to transform your data using a `ResponseTransformer` class.
 3. **Transform your data:** Call `transformData` with your data and transformer.
    ```php
-   use Tattran22\Response\Transformers\ResponseTransformer;
+   use TatTran\Response\Transformers\ResponseTransformer;
 
    $transformer = new ResponseTransformer($manager);
    $response = $transformer->transformData($data, $transformerInstance);
@@ -38,4 +38,4 @@ composer require tattran22/response
 
 ## Open Source & Credits
 
-This package is free to use under the MIT license and developed by Tat Tran (https://tattran.com).
+This package is free to use under the MIT license and developed by [Tat Tran](https://tattran.com).

@@ -9,8 +9,8 @@
         }
     ],
     "require": {
-        "php": "^8.2",
-        "laravel/framework": "^v9.0.2 | ^v10.0.1",
+        "php": "^8.0",
+        "laravel/framework": ">=8.0",
         "spatie/laravel-fractal": "^6.0.3"
     },
     "autoload": {
