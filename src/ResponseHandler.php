@@ -2,6 +2,7 @@
 
 namespace TatTran\Response;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use TatTran\Response\Transformers\ResponseTransformer;
 use Illuminate\Http\JsonResponse;
 
@@ -134,6 +135,7 @@ trait ResponseHandler
      *
      * @param mixed $data
      * @return mixed
+     * @throws BindingResolutionException
      */
     private function transform($data)
     {

@@ -14,12 +14,18 @@ class ResponseTransformer
 {
     protected $fractalManager;
 
+    /**
+     * @param Manager $fractalManager
+     */
     public function __construct(Manager $fractalManager)
     {
         $this->fractalManager = $fractalManager;
         $this->parseIncludes();
     }
 
+    /**
+     * @return void
+     */
     public function parseIncludes()
     {
         $includeQuery = Request::query('include');
@@ -29,25 +35,36 @@ class ResponseTransformer
         }
     }
 
+    /**
+     * @param $include
+     * @return void
+     */
     public function setIncludes($include)
     {
         $this->fractalManager->parseIncludes($include);
     }
 
-    public function transformData($data, $transformer)
+    /**
+     * @param $entity
+     * @param $transformer
+     * @return array|null
+     */
+    public function transform($entity, $transformer)
     {
-        if ($data instanceof Paginator) {
-            $resource = new FractalCollection($data->items(), $transformer);
+        if ($entity instanceof Paginator) {
+            $resource = new FractalCollection($entity->getCollection(), $transformer);
 
             $queryParams = array_diff_key(Request::query(), array_flip(['page']));
-            $data->appends($queryParams);
-            $resource->setPaginator(new IlluminatePaginatorAdapter($data));
-        } elseif ($data instanceof EloquentCollection) {
-            $resource = new FractalCollection($data, $transformer);
-        } else {
-            $resource = new FractalItem($data, $transformer);
-        }
+            $entity->appends($queryParams);
+            $resource->setPaginator(new IlluminatePaginatorAdapter($entity));
 
+        } elseif ($entity instanceof EloquentCollection) {
+            $resource = new FractalCollection($entity, $transformer);
+
+        } else {
+            $resource = new FractalItem($entity, $transformer);
+
+        }
         return $this->fractalManager->createData($resource)->toArray();
     }
 }
