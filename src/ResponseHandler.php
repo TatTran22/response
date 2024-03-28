@@ -130,14 +130,14 @@ trait ResponseHandler
     }
 
     /**
-     * Transform data using OptimusPrime.
+     * Transform data using ResponseTransformer.
      *
      * @param mixed $data
      * @return mixed
      */
     private function transform($data)
     {
-        $optimus = app()->make(OptimusPrime::class);
-        return $optimus->transform($data, $this->transform);
+        $responseTransform = app()->make(ResponseTransformer::class);
+        return $responseTransform->transform($data, $this->transform);
     }
 }
