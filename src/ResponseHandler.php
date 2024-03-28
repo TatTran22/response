@@ -24,11 +24,18 @@ trait ResponseHandler
      */
     protected function successResponse($data)
     {
+        $data = is_null($data) ? [] : $data;
         $response = [
             'code' => 200,
             'status' => 'success',
-            'data' => $this->transform ? $this->transform($data) : ($data ?? [])
         ];
+
+        if ($this->transform) {
+            $response = array_merge($response, $this->transform($data));
+        } else {
+            $response = array_merge($response, ['data' => $data]);
+        }
+
         return response()->json($response, $response['code']);
     }
 
